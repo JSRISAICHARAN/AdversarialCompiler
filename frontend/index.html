@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AdversarialCompiler | Security Workbench</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#172239;--line:#27334d;--text:#edf3ff;--muted:#98a7c2;--accent:#7c9cff;--cyan:#5eead4;--red:#fb7185;--amber:#fbbf24;--green:#4ade80}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0%,#172449 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 Inter,Segoe UI,Arial,sans-serif}
+button,textarea{font:inherit}.app{max-width:1440px;margin:auto;padding:28px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:14px}.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#7c9cff,#5eead4);display:grid;place-items:center;color:#08111f;font-weight:900;font-size:20px;box-shadow:0 8px 30px #5eead426}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--cyan);font-weight:800}.brand h1{font-size:22px;margin:1px 0 0;letter-spacing:-.03em}.status{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#10182a;padding:9px 13px;border-radius:999px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;background:var(--amber);border-radius:50%}.hero{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:22px}.hero h2{font-size:clamp(26px,3vw,38px);line-height:1.1;letter-spacing:-.045em;margin:0 0 10px}.hero p{color:var(--muted);margin:0;max-width:700px}.hero-tag{border:1px solid #315e68;background:#103039;color:var(--cyan);padding:8px 12px;border-radius:10px;font-size:12px;white-space:nowrap}.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px}.panel{background:linear-gradient(180deg,#141d31,#101728);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 12px 35px #00000017;min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.panel h3{font-size:15px;margin:0;font-weight:750}.sub{color:var(--muted);font-size:12px}.label{display:block;color:#b8c6df;font-size:12px;font-weight:700;margin-bottom:9px}.editor{width:100%;min-height:310px;resize:vertical;background:#090f1d;color:#d9e7ff;border:1px solid #2c3b59;border-radius:12px;padding:15px;font:13px/1.65 Consolas,Monaco,monospace;outline:none}.editor:focus{border-color:var(--accent);box-shadow:0 0 0 3px #7c9cff1a}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn{border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--text);background:#1a2741;cursor:pointer;font-weight:700;font-size:13px;transition:.15s}.btn:hover{transform:translateY(-1px);border-color:#6076a3}.btn.primary{background:linear-gradient(135deg,#8aa6ff,#6c85ef);color:#08111f;border:0}.btn.secondary{background:#103039;border-color:#245a60;color:var(--cyan)}.btn:disabled{opacity:.55;cursor:wait;transform:none}.note{margin-top:12px;color:var(--muted);font-size:11px}.result-stack{display:grid;gap:14px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{padding:14px;border-radius:13px;border:1px solid var(--line);background:#0d1525}.metric .name{font-size:11px;color:var(--muted);margin-bottom:5px}.metric .value{font-size:20px;font-weight:800;letter-spacing:-.03em;overflow-wrap:anywhere}.metric .hint{font-size:10px;color:var(--muted);margin-top:3px}.result-card{border:1px solid var(--line);background:#0e1627;border-radius:13px;padding:15px;min-width:0}.card-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px;font-weight:750;font-size:13px}.pill{border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800;color:var(--muted)}.pill.good{color:var(--green);border-color:#235c42;background:#10281f}.pill.warn{color:var(--amber);border-color:#6c5320;background:#2a2110}.pill.bad{color:var(--red);border-color:#713044;background:#2a1420}.empty{color:var(--muted);font-size:12px;padding:14px;border:1px dashed #34425d;border-radius:12px;text-align:center}.kv{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid #202b40;font-size:12px}.kv:last-child{border-bottom:0}.kv span:first-child{color:var(--muted)}.kv span:last-child{text-align:right;overflow-wrap:anywhere}.findings{display:grid;gap:8px}.finding{border-left:3px solid var(--amber);padding:9px 11px;background:#151e2f;border-radius:0 8px 8px 0}.finding.critical,.finding.high{border-color:var(--red)}.finding.low{border-color:var(--green)}.finding strong{font-size:11px;text-transform:uppercase;letter-spacing:.04em}.finding p{font-size:12px;margin:3px 0;color:#c5d1e6}.finding small{color:var(--muted);font-size:10px}.pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:160px;overflow:auto;font:11px/1.5 Consolas,monospace;color:#bdcbe3;margin:0}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{text-align:left;padding:9px;border-bottom:1px solid #253149;vertical-align:top}.table th{color:var(--muted);font-weight:700}.footer{display:flex;justify-content:space-between;gap:12px;color:#7585a2;font-size:11px;margin:20px 2px 0}.toast{display:none;margin:0 0 16px;padding:10px 13px;border-radius:10px;background:#2b1d23;border:1px solid #74404b;color:#fecdd3;font-size:12px}.toast.show{display:block}.section-gap{margin-top:18px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.app{padding:16px}.topbar{align-items:flex-start}.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:520px){.status{display:none}.metrics{grid-template-columns:1fr}.panel{padding:14px}.brand h1{font-size:18px}.footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="logo">AC</div><div><div class="eyebrow">Security workbench</div><h1>AdversarialCompiler</h1></div></div>
+    <div class="status"><span class="dot" id="statusDot"></span><span id="apiStatus">Checking API connection…</span></div>
+  </header>
+  <section class="hero">
+    <div><h2>Analyze code.<br>Challenge the prediction.</h2><p>A research prototype combining rule-based source analysis, ML classification, GCC diagnostics, and formatting-based robustness probes.</p></div>
+    <div class="hero-tag">C / GCC · Experimental ML</div>
+  </section>
+  <div class="toast" id="toast"></div>
+  <main class="grid">
+    <section class="panel">
+      <div class="panel-head"><h3>Source code input</h3><span class="sub">C language</span></div>
+      <label class="label" for="sourceCode">Paste a C function or program</label>
+      <textarea id="sourceCode" class="editor" spellcheck="false">#include <string.h>
+#include <stdio.h>
+
+int main(void) {
+    char buffer[8];
+    strcpy(buffer, "this string is too long");
+    printf("%s\n", buffer);
+    return 0;
+}</textarea>
+      <div class="actions">
+        <button class="btn primary" id="analyzeBtn" onclick="analyzeCode()">Analyze source ↗</button>
+        <button class="btn secondary" id="robustBtn" onclick="runRobustness()">Run robustness probe</button>
+        <button class="btn" onclick="loadSafeSample()">Load safe sample</button>
+        <button class="btn" onclick="clearResults()">Clear results</button>
+      </div>
+      <p class="note">Safety note: the API compiles source code but should not be exposed publicly without an isolated sandbox and resource limits. This interface does not execute submitted programs.</p>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h3>Analysis overview</h3><span class="sub" id="lastRun">Awaiting analysis</span></div>
+      <div class="metrics">
+        <div class="metric"><div class="name">ML label</div><div class="value" id="mlLabel">—</div><div class="hint">Dataset class prediction</div></div>
+        <div class="metric"><div class="name">Security findings</div><div class="value" id="findingCount">—</div><div class="hint">Static rules triggered</div></div>
+        <div class="metric"><div class="name">GCC compile</div><div class="value" id="compileStatus">—</div><div class="hint">Compile-only check</div></div>
+      </div>
+      <div class="result-stack section-gap">
+        <div class="result-card"><div class="card-title">Machine-learning prediction <span class="pill" id="mlPill">No result</span></div><div id="mlDetails" class="empty">Run source analysis to view the prediction.</div></div>
+        <div class="result-card"><div class="card-title">Static security analysis <span class="pill" id="staticPill">No result</span></div><div id="findings" class="empty">Rule-based findings will appear here.</div></div>
+        <div class="result-card"><div class="card-title">Compiler diagnostics <span class="pill" id="compilerPill">No result</span></div><div id="compilerDetails" class="empty">GCC result will appear here.</div></div>
+      </div>
+    </section>
+  </main>
+  <section class="panel section-gap">
+    <div class="panel-head"><h3>Robustness experiment</h3><span class="sub">Formatting transformations</span></div>
+    <div class="metrics">
+      <div class="metric"><div class="name">Variants tested</div><div class="value" id="variantCount">—</div><div class="hint">Original plus transformations</div></div>
+      <div class="metric"><div class="name">Prediction changes</div><div class="value" id="predictionChanges">—</div><div class="hint">Compared with baseline</div></div>
+      <div class="metric"><div class="name">Label stability</div><div class="value" id="robustRate">—</div><div class="hint">Experimental rate</div></div>
+    </div>
+    <div id="robustnessResults" class="empty section-gap">Run the robustness probe to compare predictions and compilation results across variants.</div>
+    <p class="note">Stability is not proof of semantic equivalence or security. A changed prediction is a signal to investigate, not proof of a successful attack.</p>
+  </section>
+  <footer class="footer"><span>AdversarialCompiler · Research prototype</span><span>Local API: <code>127.0.0.1:8000</code> · No source code is sent anywhere except your configured API</span></footer>
+</div>
+<script>
+const API_BASE = "http://127.0.0.1:8000";
+const $ = id => document.getElementById(id);
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function showToast(message) { $("toast").textContent = message; $("toast").classList.add("show"); }
+function hideToast() { $("toast").classList.remove("show"); }
+async function apiRequest(path, body) {
+  const options = body === undefined ? {} : {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)};
+  const response = await fetch(API_BASE + path, options);
+  const text = await response.text();
+  let data;
+  try { data = text ? JSON.parse(text) : {}; } catch { throw new Error("API returned a non-JSON response."); }
+  if (!response.ok) {
+    const detail = data.detail ? JSON.stringify(data.detail) : `${response.status} ${response.statusText}`;
+    throw new Error(detail);
+  }
+  return data;
+}
+async function checkHealth() {
+  try {
+    await apiRequest("/api/health");
+    $("apiStatus").textContent = "API connected";
+    $("statusDot").style.background = "var(--green)";
+  } catch {
+    $("apiStatus").textContent = "API unavailable";
+    $("statusDot").style.background = "var(--red)";
+  }
+}
+function setBusy(button, busy, label) { button.disabled = busy; if (busy) {button.dataset.oldLabel=button.textContent;button.textContent=label;} else if(button.dataset.oldLabel){button.textContent=button.dataset.oldLabel;delete button.dataset.oldLabel;} }
+function getSource() { const source = $("sourceCode").value; if (!source.trim()) throw new Error("Paste some C source code first."); return source; }
+function showPill(id, text, cls="") { $(id).textContent=text; $(id).className="pill "+cls; }
+function renderML(ml) {
+  if (!ml || !ml.available) {
+    $("mlLabel").textContent="N/A"; showPill("mlPill","Unavailable","warn");
+    $("mlDetails").className="empty"; $("mlDetails").textContent=ml?.message || "No ML prediction returned."; return;
+  }
+  $("mlLabel").textContent=ml.predicted_label ?? "—";
+  showPill("mlPill",ml.predicted_class || "Predicted","warn");
+  const probs=ml.class_probabilities||{};
+  $("mlDetails").className="";
+  $("mlDetails").innerHTML=`<div class="kv"><span>Predicted class</span><span>${escapeHtml(ml.predicted_class)}</span></div><div class="kv"><span>Label 0 estimate</span><span>${escapeHtml(probs.label_0 ?? "—")}</span></div><div class="kv"><span>Label 1 estimate</span><span>${escapeHtml(probs.label_1 ?? "—")}</span></div><p class="note">${escapeHtml(ml.warning || "Experimental dataset-label prediction.")}</p>`;
+}
+function renderFindings(staticData) {
+  const findings=staticData?.findings || staticData?.results || [];
+  const counts=staticData?.counts || {};
+  $("findingCount").textContent=Array.isArray(findings)?findings.length:"—";
+  showPill("staticPill",Array.isArray(findings)?`${findings.length} finding(s)`:"No data",findings?.length?"warn":"good");
+  if(!Array.isArray(findings)||!findings.length){$("findings").className="empty";$("findings").textContent="No rule-based findings returned. This does not prove the source is safe.";return;}
+  $("findings").className="findings";
+  $("findings").innerHTML=findings.map(f=>`<div class="finding ${escapeHtml(String(f.severity||"").toLowerCase())}"><strong>${escapeHtml(f.severity||"Finding")} · ${escapeHtml(f.rule_id||"Rule")}</strong><p>${escapeHtml(f.title||f.message||"Security pattern detected")}</p><small>Line ${escapeHtml(f.line_number??"—")} · ${escapeHtml(f.cwe||"CWE not specified")}</small>${f.recommendation?`<p>${escapeHtml(f.recommendation)}</p>`:""}</div>`).join("");
+}
+function renderCompiler(compilation) {
+  const compiled=compilation?.compiled;
+  $("compileStatus").textContent=compiled===true?"PASS":compiled===false?"FAIL":"—";
+  showPill("compilerPill",compiled===true?"Compiled":compiled===false?"Compile failed":"No result",compiled===true?"good":compiled===false?"bad":"");
+  if(!compilation){$("compilerDetails").className="empty";$("compilerDetails").textContent="No compilation result returned.";return;}
+  const diagnostics=compilation.diagnostics ?? compilation.stderr ?? "";
+  $("compilerDetails").className="";
+  $("compilerDetails").innerHTML=`<div class="kv"><span>Return code</span><span>${escapeHtml(compilation.return_code ?? "—")}</span></div><pre class="pre">${escapeHtml(diagnostics || "No compiler diagnostics.")}</pre>`;
+}
+async function analyzeCode() {
+  hideToast(); let source; try{source=getSource();}catch(e){showToast(e.message);return;}
+  const btn=$("analyzeBtn");setBusy(btn,true,"Analyzing…");
+  try {
+    const data=await apiRequest("/api/analyze",{source_code:source});
+    renderML(data.ml_prediction);
+    renderFindings(data.static_analysis);
+    renderCompiler(data.compilation);
+    $("lastRun").textContent="Completed · "+new Date().toLocaleTimeString();
+  } catch(e) {showToast("Analysis failed: "+e.message+" — Check that FastAPI is running at "+API_BASE);}
+  finally{setBusy(btn,false);}
+}
+async function runRobustness() {
+  hideToast(); let source; try{source=getSource();}catch(e){showToast(e.message);return;}
+  const btn=$("robustBtn");setBusy(btn,true,"Testing variants…");
+  try {
+    const data=await apiRequest("/api/robustness",{source_code:source});
+    $("variantCount").textContent=data.variants_tested ?? "—";
+    $("predictionChanges").textContent=data.prediction_changes ?? "—";
+    $("robustRate").textContent=data.robustness_rate==null?"N/A":(Number(data.robustness_rate)*100).toFixed(1)+"%";
+    const rows=data.results||[];
+    if(!rows.length){$("robustnessResults").className="empty";$("robustnessResults").textContent="No variant results returned.";return;}
+    $("robustnessResults").className="table-wrap";
+    $("robustnessResults").innerHTML=`<table class="table"><thead><tr><th>Transformation</th><th>ML label</th><th>Changed?</th><th>GCC</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${escapeHtml(r.transformation)}</td><td>${escapeHtml(r.predicted_label??"N/A")}</td><td>${r.prediction_changed?'<span style="color:var(--red)">Yes</span>':'<span style="color:var(--green)">No</span>'}</td><td>${r.compiled===true?'<span style="color:var(--green)">Pass</span>':r.compiled===false?'<span style="color:var(--red)">Fail</span>':'N/A'}</td></tr>`).join("")}</tbody></table><p class="note">${escapeHtml(data.warning||"Experimental result.")}</p>`;
+  } catch(e) {showToast("Robustness probe failed: "+e.message+" — Check that the /api/robustness endpoint is available.");}
+  finally{setBusy(btn,false);}
+}
+function loadSafeSample() {
+  $("sourceCode").value=`#include <stdio.h>\n\nint main(void) {\n    printf("Hello, world!\\\\n");\n    return 0;\n}`;
+}
+function clearResults() {
+  ["mlLabel","findingCount","compileStatus","variantCount","predictionChanges","robustRate"].forEach(id=>$(id).textContent="—");
+  $("lastRun").textContent="Awaiting analysis";
+  $("mlDetails").className="empty";$("mlDetails").textContent="Run source analysis to view the prediction.";
+  $("findings").className="empty";$("findings").textContent="Rule-based findings will appear here.";
+  $("compilerDetails").className="empty";$("compilerDetails").textContent="GCC result will appear here.";
+  $("robustnessResults").className="empty";$("robustnessResults").textContent="Run the robustness probe to compare predictions and compilation results across variants.";
+  ["mlPill","staticPill","compilerPill"].forEach(id=>showPill(id,"No result"));
+}
+checkHealth();
+</script>
+</body>
+</html>

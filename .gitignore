@@ -1,0 +1,37 @@
+
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Temporary compiler files
+*.exe
+*.o
+*.obj
+*.out
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# Large dataset files
+data/raw/vulnerable-c-functions-for-security-prediction.zip
+data/raw/c_vulnerability/dataset.csv

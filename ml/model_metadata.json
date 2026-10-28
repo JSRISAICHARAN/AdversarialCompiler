@@ -1,0 +1,9 @@
+{
+  "model_type": "TF-IDF character n-grams + Logistic Regression",
+  "label_0": "benign teaching example",
+  "label_1": "example containing selected risky pattern",
+  "training_examples": 36,
+  "test_examples": 12,
+  "random_state": 42,
+  "limitation": "Small illustrative dataset; metrics do not establish real-world security detection performance."
+}

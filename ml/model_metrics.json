@@ -1,0 +1,27 @@
+{
+  "dataset": "Kaggle vulnerable C functions dataset",
+  "sample_count": 53756,
+  "train_count": 43004,
+  "test_count": 10752,
+  "label_convention": {
+    "0": "non-vulnerable (dataset label)",
+    "1": "vulnerable (dataset label)"
+  },
+  "positive_class": 1,
+  "precision_label_1": 0.8330627705627706,
+  "recall_label_1": 0.8670796958603211,
+  "f1_label_1": 0.8497309231406099,
+  "confusion_matrix_labels_0_then_1": [
+    [
+      6584,
+      617
+    ],
+    [
+      472,
+      3079
+    ]
+  ],
+  "model": "Character TF-IDF + Logistic Regression",
+  "split": "random stratified split; not project-independent",
+  "warning": "Experimental classifier. Random splitting can cause project or duplicate leakage. Predictions do not prove that code is safe or vulnerable."
+}
